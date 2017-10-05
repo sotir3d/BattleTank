@@ -23,8 +23,6 @@ void ATankPlayerController::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	AimTowardsCrosshair();
-
-	UE_LOG(LogTemp, Warning, TEXT("Ticktock"))
 }
 
 
@@ -42,7 +40,7 @@ void ATankPlayerController::AimTowardsCrosshair()
 
 	if (GetSightRayHitLocation(HitLocation))
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Hitlocation: %s"), *HitLocation.ToString())
+		GetControlledTank()->AimAt(HitLocation);
 	}
 
 
@@ -50,7 +48,61 @@ void ATankPlayerController::AimTowardsCrosshair()
 
 bool ATankPlayerController::GetSightRayHitLocation(FVector & OutHitLocation) const
 {
-	OutHitLocation = FVector(1.f, 1.f, 1.f);
+	/// find crosshair position
+	int32 ViewportSizeX, ViewportSizeY;
+
+	FVector LookDirection;
+
+	GetViewportSize(ViewportSizeX, ViewportSizeY);
+
+	auto ScreenLocation = FVector2D(ViewportSizeX * CrossHairXLocation, ViewportSizeY * CrossHairYLocation);
+	
+	if (GetLookDirection(ScreenLocation, LookDirection))
+	{
+		/// LineTrace along that LookDirection and see if we hit something
+		/// GetLookVectorHitLocation
+		if (GetLookVectorHitLocation(LookDirection, OutHitLocation))
+		{
+
+		}
+	}
+
+	/// deproject the screen position of the crosshair to a world direction
+	/// line trace along the direction
 
 	return true;
+}
+
+bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation, FVector & OutLookDirection) const
+{
+	FVector WorldLocation; // Will be discarded
+
+	return DeprojectScreenPositionToWorld(
+		ScreenLocation.X, 
+		ScreenLocation.Y, 
+		WorldLocation, 
+		OutLookDirection
+	);
+}
+
+bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVector & OutHitLocation) const
+{
+	FHitResult HitResult;
+
+	auto StartLocation = PlayerCameraManager->GetCameraLocation();
+	auto EndLocation = StartLocation + (LookDirection * LineTraceRange);
+	
+	if (GetWorld()->LineTraceSingleByChannel(
+		HitResult,
+		StartLocation,
+		EndLocation,
+		ECollisionChannel::ECC_Visibility
+	))
+	{
+		OutHitLocation = HitResult.Location;
+		return true;
+	}
+
+	OutHitLocation = FVector(0);
+	return false;
 }
