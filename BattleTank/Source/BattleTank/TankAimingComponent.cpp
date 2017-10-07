@@ -34,13 +34,24 @@ void UTankAimingComponent::AimAt(FVector WorldSpaceAim, float LaunchSpeed)
 		StartLocation,
 		WorldSpaceAim,
 		LaunchSpeed,
+		false,
+		0,
+		0,
 		ESuggestProjVelocityTraceOption::DoNotTrace
 	);
 
 	if ( bHaveAimSolution )
 	{
 		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
+		auto Time = GetWorld()->GetTimeSeconds();
+		auto TankName = GetOwner()->GetName();
+		UE_LOG(LogTemp, Warning, TEXT("%f: Aim solution found for Tank %s"), Time, *TankName)
 		MoveBarrelTowards(AimDirection);
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("No solution found"))
+		MoveBarrelTowards(FVector(0,0,0));
 	}
 
 }
@@ -51,7 +62,5 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 	auto AimAsRotator = AimDirection.Rotation();
 	auto DeltaRotator = AimAsRotator - BarrelRotator;
 
-	UE_LOG(LogTemp, Warning, TEXT("AimAsRotator: %s"), *AimAsRotator.ToString())
-
-	Barrel->Elevate(5); // TODO remove magic number
+	Barrel->Elevate(DeltaRotator.Pitch); // TODO remove magic number
 }
