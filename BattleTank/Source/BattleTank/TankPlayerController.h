@@ -22,8 +22,11 @@ public:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
 
-private:
+protected:
+	UFUNCTION(BlueprintCallable, Category = "Setup")
 	ATank * GetControlledTank() const;
+
+private:
 	void AimTowardsCrosshair();  //Moves the Barrel towards the Crosshair
 	bool GetSightRayHitLocation(FVector & OutHitLocation) const;
 
