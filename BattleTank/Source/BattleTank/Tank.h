@@ -28,10 +28,7 @@ protected:
 
 	UPROPERTY(BlueprintReadOnly)
 	UTankAimingComponent * TankAimingComponent = nullptr;
-
-	UPROPERTY(BlueprintReadOnly)
-	UTankMovementComponent * TankMovementComponent = nullptr;
-
+	
 public:	
 
 	void AimAt(FVector HitLocation);
@@ -40,6 +37,7 @@ public:
 	void Fire();
 
 private:	
+	// TODO Remove once firing is in AimingComponent
 	UPROPERTY(EditDefaultsOnly, Category = Firing)
 	float LaunchSpeed = 100000; // TODO find sensible default
 
