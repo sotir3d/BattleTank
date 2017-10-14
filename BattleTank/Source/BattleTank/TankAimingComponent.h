@@ -35,10 +35,10 @@ public:
 public:	
 	void AimAt(FVector WorldSpaceAim);
 
-	void MoveBarrelTowards(FVector AimDirection);
-
 	UFUNCTION(BlueprintCallable, Category = Firing)
 	void Fire();
+
+	void MoveBarrelTowards(FVector AimDirection);
 
 private:
 	UTankBarrel * Barrel = nullptr;
