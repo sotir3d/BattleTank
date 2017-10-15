@@ -105,8 +105,6 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 	{
 		FiringStatus = EFiringStatus::Locked;
 	}
-
-	// TODO handle aiming and locked states
 }
 
 void UTankAimingComponent::Fire()
@@ -132,10 +130,8 @@ void UTankAimingComponent::Fire()
 
 bool UTankAimingComponent::IsBarrelMoving()
 {
-	if (ensure(Barrel)) { false; }
+	if (!ensure(Barrel)) { return false; }
 	auto BarrelForward = Barrel->GetForwardVector();
 
 	return !AimDirection.Equals(BarrelForward, 0.03f);
-	
-	
 }
