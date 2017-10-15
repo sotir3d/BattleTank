@@ -56,21 +56,22 @@ private:
 	UTankTurret * Turret = nullptr;
 
 	UFUNCTION(BlueprintCallable, Category = "Setup")
-	void Initialize(UTankBarrel * BarrelToSet, UTankTurret * TurretToSet); 
+	void Initialize(UTankBarrel * BarrelToSet, UTankTurret * TurretToSet);
+
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	TSubclassOf<AProjectile> ProjectileBlueprint;
 	
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float LaunchSpeed = 10000; 
 
-	UPROPERTY(EditDefaultsOnly, Category = "Setup")
-	TSubclassOf<AProjectile> ProjectileBlueprint;
-
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float ReloadTimeInSeconds = 3;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+	int32 AmmoCount = 3;
+
 	double LastFireTime = 0;
 	FVector AimDirection;
-
-	int32 AmmoCount = 3;
 
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
