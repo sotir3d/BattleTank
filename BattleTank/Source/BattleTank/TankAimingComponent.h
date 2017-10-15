@@ -31,6 +31,9 @@ public:
 	// Sets default values for this component's properties
 	UTankAimingComponent();
 
+	virtual void BeginPlay() override;
+	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+
 	void AimAt(FVector WorldSpaceAim);
 
 	UFUNCTION(BlueprintCallable, Category = Firing)
@@ -40,8 +43,7 @@ public:
 
 	void MoveBarrelTowards(FVector AimDirection);
 
-	virtual void BeginPlay() override;
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+	EFiringStatus GetFiringStatus() const;
 
 private:
 
