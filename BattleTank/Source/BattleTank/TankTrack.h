@@ -32,7 +32,7 @@ public:
 	float TrackMaxDrivingForce = 20000000; 
 
 private:
-	UFUNCTION(BlueprintCallable, Category = "Collision")
+	UFUNCTION()
 	void OnHit(UPrimitiveComponent * HitComponent, AActor * OtherActor, UPrimitiveComponent * OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
 
 	float CurrentThrottle = 0;
