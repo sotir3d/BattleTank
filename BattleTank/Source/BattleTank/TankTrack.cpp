@@ -34,13 +34,13 @@ void UTankTrack::ApplySidewaysForce()
 void UTankTrack::SetThrottle(float Throttle)
 {
 	CurrentThrottle = FMath::Clamp<float>(CurrentThrottle + Throttle, -1.0, 1.0);
-
+	
 	DriveTrack();
+	
 }
 
 void UTankTrack::DriveTrack()
 {
-	UE_LOG(LogTemp, Warning, TEXT("%f: %s with %f"), GetWorld()->GetTimeSeconds(), *GetName(), CurrentThrottle)
 	auto ForceApplied = GetForwardVector() * CurrentThrottle * TrackMaxDrivingForce;
 	auto ForceLocation = GetComponentLocation();
 	auto TankRoot = Cast<UPrimitiveComponent>(GetOwner()->GetRootComponent());
