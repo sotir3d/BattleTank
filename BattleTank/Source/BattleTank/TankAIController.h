@@ -20,9 +20,15 @@ public:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaSeconds) override;
 
+	virtual void SetPawn(APawn * InPawn) override;
+
+
 private:
 	//how close can the AI Tank get
 	UPROPERTY(EditAnywhere, Category = "Setup")
 	float AcceptanceRadius = 5000;
+
+	UFUNCTION()
+	void OnTankDeath();
 
 };

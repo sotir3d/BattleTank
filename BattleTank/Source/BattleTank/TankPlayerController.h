@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "EngineMinimal.h"
 #include "GameFramework/PlayerController.h"
+#include "Tank.h"
 #include "TankPlayerController.generated.h"
 
 class UTankAimingComponent;
@@ -20,6 +21,7 @@ class BATTLETANK_API ATankPlayerController : public APlayerController
 public:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
+	virtual void SetPawn(APawn * InPawn) override;
 
 protected:
 
@@ -40,4 +42,7 @@ private:
 	float CrossHairYLocation = 0.3333333333f;
 	UPROPERTY(EditDefaultsOnly)
 	float LineTraceRange = 1000000.f;
+
+	UFUNCTION()
+	void OnTankDeath();
 };

@@ -105,3 +105,25 @@ bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVec
 	OutHitLocation = FVector(0);
 	return false;
 }
+
+void ATankPlayerController::SetPawn(APawn * InPawn)
+{
+	Super::SetPawn(InPawn);
+
+	if (InPawn)
+	{
+		auto PossessedTank = Cast<ATank>(InPawn);
+
+		if (!ensure(PossessedTank)) { return; }
+
+		//subscribe method to tank broadcast
+		PossessedTank->OnDeath.AddUniqueDynamic(this, &ATankPlayerController::OnTankDeath);
+
+	}
+}
+
+void ATankPlayerController::OnTankDeath()
+{
+	UE_LOG(LogTemp, Warning, TEXT("I AM DED"))
+	//StartSpectatingOnly();
+}
