@@ -49,7 +49,9 @@ void ATankAIController::SetPawn(APawn * InPawn)
 
 void ATankAIController::OnTankDeath()
 {
-	UE_LOG(LogTemp, Warning, TEXT("DED"))
+	if (!GetPawn()) { return; }
+
+	GetPawn()->DetachFromControllerPendingDestroy();
 }
 
 
