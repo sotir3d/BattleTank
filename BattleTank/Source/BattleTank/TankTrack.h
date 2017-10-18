@@ -37,4 +37,7 @@ private:
 
 	float CurrentThrottle = 0;
 	bool bIsOnGround = false;
+
+	float OnHitTime;
+	float OnHitDelay = 0.01;
 };

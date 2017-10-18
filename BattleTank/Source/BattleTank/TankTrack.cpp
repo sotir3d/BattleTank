@@ -17,6 +17,7 @@ void UTankTrack::OnHit(UPrimitiveComponent * HitComponent, AActor * OtherActor, 
 {
 	ApplySidewaysForce();
 	CurrentThrottle = 0;
+	OnHitTime = GetWorld()->GetTimeSeconds();
 }
 
 void UTankTrack::ApplySidewaysForce()
@@ -34,7 +35,11 @@ void UTankTrack::ApplySidewaysForce()
 void UTankTrack::SetThrottle(float Throttle)
 {
 	CurrentThrottle = FMath::Clamp<float>(CurrentThrottle + Throttle, -1.0, 1.0);
-	DriveTrack();	
+
+	if ((GetWorld()->GetTimeSeconds() - OnHitTime) < OnHitDelay)
+	{
+		DriveTrack();
+	}
 }
 
 void UTankTrack::DriveTrack()
