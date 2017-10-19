@@ -38,6 +38,7 @@ void UTankTrack::SetThrottle(float Throttle)
 
 	if ((GetWorld()->GetTimeSeconds() - OnHitTime) < OnHitDelay)
 	{
+		UE_LOG(LogTemp, Warning, TEXT("%s: %f"), *GetName(), CurrentThrottle)
 		DriveTrack();
 	}
 }

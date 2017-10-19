@@ -15,6 +15,8 @@ class AProjectile;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FTankDelegate);
 
+class UParticleSystemComponent;
+
 UCLASS()
 class BATTLETANK_API ATank : public APawn
 {
@@ -33,6 +35,9 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	//UPROPERTY(VisibleAnywhere, Category = "Components")
+	UParticleSystemComponent * DeathExplosion = nullptr;
 
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")

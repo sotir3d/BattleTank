@@ -3,6 +3,7 @@
 #include "Tank.h"
 #include "Kismet/GameplayStatics.h"
 #include "Math/UnrealMathUtility.h"
+#include "Particles/ParticleSystemComponent.h"
 
 
 
@@ -19,6 +20,8 @@ void ATank::BeginPlay()
 	Super::BeginPlay();
 
 	CurrentHealth = StartingHealth;
+
+	DeathExplosion = FindComponentByClass<UParticleSystemComponent>();
 }
 
 
@@ -29,11 +32,10 @@ float ATank::TakeDamage(float DamageAmount, FDamageEvent const & DamageEvent, AC
 
 	CurrentHealth -= DamagePoints;
 
-	UE_LOG(LogTemp, Warning, TEXT("%i %i %f"), CurrentHealth, DamagePoints, DamageAmount)
-
 	if (CurrentHealth <= 0)
 	{
 		OnDeath.Broadcast();
+		DeathExplosion->Activate();
 	}
 
 	return DamageToApply;

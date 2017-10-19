@@ -21,6 +21,7 @@ enum class EFiringStatus : uint8
 class UTankBarrel; 
 class UTankTurret;
 class AProjectile;
+class UAudioComponent;
 
 // Hold barrel properties
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
